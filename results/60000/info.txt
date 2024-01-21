@@ -1,0 +1,4 @@
+train: 60000
+neurons: 1000 
+epochs: 20
+layers: 6
