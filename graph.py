@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 
 # Чтение данных из файлов
-with open('output/test.txt', 'r') as f:
+with open('results/test_results.txt', 'r') as f:
     test_data = f.readlines()
-with open('output/train.txt', 'r') as f:
+with open('results/train_results.txt', 'r') as f:
     train_data = f.readlines()
 
 # Извлечение точности и функции потерь из данных
@@ -24,4 +24,6 @@ axs[1].plot(train_loss, label='Обучающая выборка')
 axs[1].set_xlabel('Эпоха')
 axs[1].set_ylabel('Функция потерь')
 axs[1].legend()
+axs[0].grid(True)
+axs[1].grid(True)
 plt.show()
