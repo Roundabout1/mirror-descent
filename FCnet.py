@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 
 # neurons_num - количество нейронов в каждом слое
@@ -12,11 +13,11 @@ class FCnet(nn.Module):
         self.output_size = output_size
         # внутренние слои + входной + выходной
         self.layers_num = inner_layers_num + 2
-        self.layers = [None] * self.layers_num
-        self.layers[0] = nn.Linear(input_size, neurons_num)
+        self.layers = nn.ModuleList()
+        self.layers.append(nn.Linear(input_size, neurons_num))
         for i in range(inner_layers_num):
-            self.layers[i+1] =  nn.Linear(neurons_num, neurons_num)
-        self.layers[self.layers_num-1] = nn.Linear(neurons_num, output_size)
+            self.layers.append(nn.Linear(neurons_num, neurons_num))
+        self.layers.append(nn.Linear(neurons_num, output_size))
 
         self.activation_function = nn.functional.relu
     def forward(self, x):
@@ -34,3 +35,5 @@ class FCnet(nn.Module):
 
 model = FCnet(800, 28*28, 10, 2)
 print(model.info())
+for n, p in model.named_parameters():
+    print(n, p)
