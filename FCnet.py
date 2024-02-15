@@ -23,7 +23,7 @@ class FCnet(nn.Module):
         x = x.view(-1, self.input_size)
         for i in range(self.layers_num-1):
             x = self.activation_function(self.layers[i])
-        x = self.fc4(self.layers_num-1)
+        x = self.layers[self.layers_num-1]
         return x
     def info(self):
         layers = f'layers: {self.layers_num}\n'
