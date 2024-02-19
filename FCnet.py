@@ -18,13 +18,13 @@ class FCnet(nn.Module):
         for i in range(inner_layers_num):
             self.layers.append(nn.Linear(neurons_num, neurons_num))
         self.layers.append(nn.Linear(neurons_num, output_size))
-
         self.activation_function = nn.functional.relu
+
     def forward(self, x):
         x = x.view(-1, self.input_size)
         for i in range(self.layers_num-1):
-            x = self.activation_function(self.layers[i])
-        x = self.layers[self.layers_num-1]
+            x = self.activation_function(self.layers[i](x))
+        x = self.layers[self.layers_num-1](x)
         return x
     def info(self):
         layers = f'layers: {self.layers_num}\n'
@@ -32,8 +32,3 @@ class FCnet(nn.Module):
         img = f'img_size: {self.input_size}\n'
         active_fun = f'activation function: {self.activation_function.__name__}\n'
         return layers + neurons + img + active_fun
-
-model = FCnet(800, 28*28, 10, 2)
-print(model.info())
-for n, p in model.named_parameters():
-    print(n, p)
