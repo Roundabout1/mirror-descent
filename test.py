@@ -6,6 +6,8 @@ from torchvision import datasets, transforms
 from FCnet import FCnet
 from tester import NetTester
 from data_load import balancing
+
+from customSGD import CustomSGD
 OUTPUT_ROOT = "output"
 
 device = (
@@ -38,10 +40,10 @@ tester = NetTester(
       device=device,
       train_dataloader=train_dataloader,
       test_dataloader=test_dataloader,
-      optimizer=optim.SGD(model.parameters(), lr=0.05),
+      optimizer=CustomSGD(model.parameters(), lr=0.05),
       loss_fn=nn.CrossEntropyLoss()
 )
 
-tester.train(epochs=2*(60000//train_num))
+tester.train(epochs=5*(60000//train_num))
 
 tester.save_results(OUTPUT_ROOT)
