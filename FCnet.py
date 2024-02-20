@@ -1,4 +1,3 @@
-import torch
 import torch.nn as nn
 
 # neurons_num - количество нейронов в каждом слое
