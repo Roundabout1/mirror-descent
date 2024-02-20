@@ -1,4 +1,4 @@
 results/
 data/MNIST/
 output/
-__pycache__/FCnet.cpython-311.pyc
+__pycache__/
