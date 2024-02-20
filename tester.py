@@ -109,9 +109,8 @@ class NetTester:
             f.write(f'optimizer: {self.optimizer}\n')
             f.write(f'train batch size: {self.train_dataloader.batch_size}\n')
             f.write(f'test batch size: {self.test_dataloader.batch_size}\n')
-            f.write(f'train data size: {self.train_num}\n')
-        self.train_dataloader.bat
+            f.write(f'train data size: {len(self.train_dataloader.dataset)}\n')
         # сохранение модели
         torch.save(self.model, os.path.join(folder_path, 'model.pt'))
         # сохранение тренировочных данных
-        torch.save(self.train_dataset, os.path.join(folder_path, 'train.pt'))
+        torch.save(self.train_dataloader.dataset, os.path.join(folder_path, 'train.pt'))
