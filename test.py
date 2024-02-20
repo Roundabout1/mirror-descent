@@ -38,7 +38,7 @@ tester = NetTester(
       device=device,
       train_dataloader=train_dataloader,
       test_dataloader=test_dataloader,
-      optimizer=torch.optim.SGD(model.parameters(), lr=0.05),
+      optimizer=optim.SGD(model.parameters(), lr=0.05),
       loss_fn=nn.CrossEntropyLoss()
 )
 
