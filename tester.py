@@ -9,6 +9,10 @@ class TrainLog:
         self.first_epoch = first_epoch
         self.dont_skip = dont_skip
         self.test_every = test_every
+        """
+        TODO: количество секунд, потраченных на тест
+        """
+        self.test_time = 0.0
 
 # тестировщик нейронной сети
 class NetTester:
@@ -27,6 +31,8 @@ class NetTester:
         self.train_results = []
         self.test_results = []
         self.training_log = []
+        # общее время, потраченное на тесты
+        self.common_time = 0.0
     # обучение в течение одной эпохи
     def train_step(self, dataloader, show_progress=False):
         size = len(dataloader.dataset)
@@ -67,6 +73,7 @@ class NetTester:
     # dont_skip - до какой эпохи не пропускать тесты (значение меньше нуля будет означать не пропускать тесты)
     # test_every - тестировать каждую test_every эпоху, все остальноё - пропустить
     def train(self, epochs, dont_skip=-1, test_every=1):
+        time_start = time.time()
         if dont_skip < 0:
             dont_skip = epochs
         self.training_log.append(TrainLog(epochs=epochs, dont_skip=dont_skip, test_every=test_every, first_epoch=self.actual_epochs+1))
@@ -82,6 +89,7 @@ class NetTester:
                 self.test_results.append((self.initial_epoch+self.actual_epochs, test_accuracy, test_loss))
             self.actual_epochs += 1 
         print("Done!")
+        self.common_time += time.time() - time_start
         return self.train_results, self.test_results
 
     # запись результатов тестирования 
@@ -110,6 +118,7 @@ class NetTester:
             f.write(f'train batch size: {self.train_dataloader.batch_size}\n')
             f.write(f'test batch size: {self.test_dataloader.batch_size}\n')
             f.write(f'train data size: {len(self.train_dataloader.dataset)}\n')
+            f.write(f'test time overall: {self.common_time}')
         # сохранение модели
         torch.save(self.model, os.path.join(folder_path, 'model.pt'))
         # сохранение тренировочных данных
