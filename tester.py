@@ -85,7 +85,7 @@ class NetTester:
         return self.train_results, self.test_results
 
     # запись результатов тестирования 
-    def save_results(self, output_root):
+    def save_results(self, output_root, folder_name='treck'):
         # генерация уникального имени
 
         cur_time = (str(time.time())).replace('.', '_')
