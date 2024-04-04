@@ -1,9 +1,15 @@
 import matplotlib.pyplot as plt
-
+from tkinter import filedialog
+# file_name = tk.filedialog.askopenfilename(
+#     filetypes=[('', '*.' + 'txt')],
+#     initialdir="output"
+# )
+folder_name = filedialog.askdirectory(initialdir="output")
+print(folder_name)
 # Чтение данных из файлов
-with open('results/test_results.txt', 'r') as f:
+with open(f'{folder_name}/test_results.txt', 'r') as f:
     test_data = f.readlines()
-with open('results/train_results.txt', 'r') as f:
+with open(f'{folder_name}/train_results.txt', 'r') as f:
     train_data = f.readlines()
 
 # Извлечение точности и функции потерь из данных
