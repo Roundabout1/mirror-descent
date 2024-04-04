@@ -12,4 +12,3 @@ class CustomSGD(Optimizer):
         for group in self.param_groups:
             for p in group['params']: 
                 p.data -= group['lr'] * p.grad.data
-                  
