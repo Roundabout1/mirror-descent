@@ -17,13 +17,13 @@ class TrainLog:
 # тестировщик нейронной сети
 class NetTester:
     # initial_epoch - эпоха с которой следует начинать нумерацию
-    def __init__(self, model, device, train_dataloader, test_dataloader, optimizer, loss_fn, initial_epoch=1):
+    def __init__(self, model, device, train_dataloader, test_dataloader, optimizer, loss, initial_epoch=1):
         self.model = model
         self.device = device
         self.train_dataloader = train_dataloader
         self.test_dataloader = test_dataloader
         self.optimizer = optimizer
-        self.loss_fn = loss_fn
+        self.loss = loss
         self.initial_epoch = initial_epoch
         self.actual_epochs = 0
         self.dont_skip = 0
@@ -42,7 +42,7 @@ class NetTester:
 
             # Ошибка предсказания
             pred = self.model(X)
-            loss = self.loss_fn(pred, y)
+            loss = self.loss.apply(pred, y)
 
             # Backpropagation
             loss.backward()
@@ -63,7 +63,7 @@ class NetTester:
             for X, y in dataloader:
                 X, y = X.to(self.device), y.to(self.device)
                 pred = self.model(X)
-                test_loss += self.loss_fn(pred, y).item()
+                test_loss += self.loss.apply(pred, y).item()
                 correct += (pred.argmax(1) == y).type(torch.float).sum().item()
         test_loss /= num_batches
         correct /= size
@@ -113,7 +113,7 @@ class NetTester:
             f.write(f'Epochs: {self.actual_epochs}\n')
             f.write(f'unskippable epochs: {self.dont_skip}\n')
             f.write(f'test every {self.test_every} epochs\n')
-            f.write(f'loss function: {self.loss_fn}\n')
+            f.write(f'loss function: {self.loss}\n')
             f.write(f'optimizer: {self.optimizer}\n')
             f.write(f'train batch size: {self.train_dataloader.batch_size}\n')
             f.write(f'test batch size: {self.test_dataloader.batch_size}\n')
