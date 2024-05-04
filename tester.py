@@ -33,6 +33,7 @@ class NetTester:
         self.training_log = []
         # общее время, потраченное на тесты
         self.common_time = 0.0
+
     # обучение в течение одной эпохи
     def train_step(self, dataloader, show_progress=False):
         size = len(dataloader.dataset)
@@ -97,7 +98,7 @@ class NetTester:
         # генерация уникального имени
 
         cur_time = (str(time.time())).replace('.', '_')
-        folder_path_base = os.path.join(output_root, 'treck_' + cur_time)
+        folder_path_base = os.path.join(output_root, folder_name + '_' + cur_time)
         # проверка на то, что это имя не существует
         cnt = 0 
         folder_path = folder_path_base
