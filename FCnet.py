@@ -19,6 +19,18 @@ class FCnet(nn.Module):
         self.layers.append(nn.Linear(neurons_num, output_size))
         self.activation_function = nn.functional.relu
 
+    def clone(self):
+        """
+        повторное создание модели с такими же исходными данными
+        """
+        clone = FCnet(
+            neurons_num=self.neurons_num,
+            input_size=self.input_size,
+            output_size=self.output_size,
+            inner_layers_num=self.layers_num-2
+        )
+        return clone
+
     def forward(self, x):
         x = x.view(-1, self.input_size)
         for i in range(self.layers_num-1):
