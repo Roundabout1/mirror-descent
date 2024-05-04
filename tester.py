@@ -17,7 +17,7 @@ class TrainLog:
 # тестировщик нейронной сети
 class NetTester:
     # initial_epoch - эпоха с которой следует начинать нумерацию
-    def __init__(self, model, device, train_dataloader, test_dataloader, optimizer, loss, initial_epoch=1):
+    def __init__(self, model, device, train_dataloader, test_dataloader, optimizer, loss, initial_epoch=1, show_progress=False):
         self.model = model
         self.device = device
         self.train_dataloader = train_dataloader
@@ -33,9 +33,25 @@ class NetTester:
         self.training_log = []
         # общее время, потраченное на тесты
         self.common_time = 0.0
-
+        # показывать промежуточные результаты тестирования в консоли
+        self.show_progress = show_progress
+    def clone(self):
+        """
+         повторное создание тестера с такими же исходными данными
+        """
+        clone = NetTester(
+            model=self.model,
+            device=self.device,
+            test_dataloader=self.test_dataloader,
+            optimizer=self.optimizer,
+            loss=self.loss,
+            initial_epoch=self.initial_epoch,
+            train_dataloader=self.train_dataloader,
+            show_progress=self.show_progress
+        )
+        return clone
     # обучение в течение одной эпохи
-    def train_step(self, dataloader, show_progress=False):
+    def train_step(self, dataloader):
         size = len(dataloader.dataset)
         self.model.train()
         for batch, (X, y) in enumerate(dataloader):
@@ -51,7 +67,7 @@ class NetTester:
             self.optimizer.zero_grad()
 
             # вывод текущего прогресса, для того, чтобы убедиться, что обучение идёт
-            if show_progress and batch % 100 == 0:
+            if self.show_progress and batch % 100 == 0:
                 loss, current = loss.item(), (batch + 1) * len(X)
                 print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
