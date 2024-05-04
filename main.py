@@ -24,8 +24,8 @@ print(f"Using {device} device")
 train_num = 60000
 train_dataset = datasets.MNIST(root='./data', train=True, transform=transforms.ToTensor(), download=True)
 test_dataset = datasets.MNIST(root='./data', train=False, transform=transforms.ToTensor(), download=True)
-#train_num = 100
-#train_dataset = balancing(train_dataset, 10, train_num)
+train_num = 100
+train_dataset = balancing(train_dataset, 10, train_num)
 train_dataloader = DataLoader(train_dataset, batch_size=25, shuffle=True)
 test_dataloader = DataLoader(test_dataset, batch_size=128, shuffle=True)
 
@@ -40,12 +40,14 @@ tester = NetTester(
       device=device,
       train_dataloader=train_dataloader,
       test_dataloader=test_dataloader,
-      optimizer=SMD_qnorm(model.parameters(), lr=0.05, q=3),
-      loss=Loss(loss_fn=nn.CrossEntropyLoss())
+      optimizer=optim.SGD(model.parameters(), lr=0.05),
+      loss=Loss_L2(loss_fn=nn.CrossEntropyLoss(), model_parameters=model.parameters(), l2_lambda=0.01)
 )
 
 tester.train(
-    epochs=5*(60000//train_num), 
+    epochs=60*(60000//train_num), 
+    dont_skip=100,
+    test_every=100,
 )
 
 tester.save_results(OUTPUT_ROOT)
