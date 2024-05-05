@@ -21,8 +21,8 @@ train_batches = [256, 128, 96]
 dont_skips = [5, 10, 15]
 test_every = [2, 4, 6]
 folder_name = "big_test1"
-for i in range(train_sizes):
-    train_dataloaders = make_dataloaders(4, train_dataset, train_sizes[i], train_batches[i], 10)
+for parameter_i in range(len(train_sizes)):
+    train_dataloaders = make_dataloaders(4, train_dataset, train_sizes[parameter_i], train_batches[parameter_i], 10)
     super_model = FCnet(800, 28*28, 10, 2).to(device)
 
     # градиентный спуск без регуляризации
@@ -30,17 +30,17 @@ for i in range(train_sizes):
     # создаём тестеры
     num_testers = len(models)
     testers = []
-    for i in range(num_testers):
+    for tester_i in range(num_testers):
         cur_tester = NetTester(
-        model=models[i],
+        model=models[tester_i],
         device=device,
-        train_dataloader=train_dataloaders[i],
+        train_dataloader=train_dataloaders[tester_i],
         test_dataloader=test_dataloader,
-        optimizer=optim.SGD(models[i].parameters(), lr=0.05),
+        optimizer=optim.SGD(models[tester_i].parameters(), lr=0.05),
         loss=Loss(nn.CrossEntropyLoss()),
         )
         testers.append(cur_tester)
-    run_tests(testers, full_scale_epochs*(full_scale//train_sizes[i]), dont_skips[i], test_every[i])
+    run_tests(testers, full_scale_epochs*(full_scale//train_sizes[parameter_i]), dont_skips[parameter_i], test_every[parameter_i])
     main_tester = concat_results(testers)
     main_tester.save_results(folder_name, 'SGD')
 
@@ -49,17 +49,17 @@ for i in range(train_sizes):
     # создаём тестеры
     num_testers = len(models)
     testers = []
-    for i in range(num_testers):
+    for tester_i in range(num_testers):
         cur_tester = NetTester(
-        model=models[i],
+        model=models[tester_i],
         device=device,
-        train_dataloader=train_dataloaders[i],
+        train_dataloader=train_dataloaders[tester_i],
         test_dataloader=test_dataloader,
-        optimizer=optim.SGD(models[i].parameters(), lr=0.05),
-        loss=Loss_L2(loss_fn=nn.CrossEntropyLoss(), model_parameters=models[i].parameters(), l2_lambda=0.01),
+        optimizer=optim.SGD(models[tester_i].parameters(), lr=0.05),
+        loss=Loss_L2(loss_fn=nn.CrossEntropyLoss(), model_parameters=models[tester_i].parameters(), l2_lambda=0.01),
         )
         testers.append(cur_tester)
-    run_tests(testers, full_scale_epochs*(full_scale//train_sizes[i]), dont_skips[i], test_every[i])
+    run_tests(testers, full_scale_epochs*(full_scale//train_sizes[parameter_i]), dont_skips[parameter_i], test_every[parameter_i])
     main_tester = concat_results(testers)
     main_tester.save_results(folder_name, 'SGDL2')
 
@@ -68,16 +68,16 @@ for i in range(train_sizes):
     # создаём тестеры
     num_testers = len(models)
     testers = []
-    for i in range(num_testers):
+    for tester_i in range(num_testers):
         cur_tester = NetTester(
-        model=models[i],
+        model=models[tester_i],
         device=device,
-        train_dataloader=train_dataloaders[i],
+        train_dataloader=train_dataloaders[tester_i],
         test_dataloader=test_dataloader,
-        optimizer=SMD_qnorm(models[i].parameters(), lr=0.05, q=3),
+        optimizer=SMD_qnorm(models[tester_i].parameters(), lr=0.05, q=3),
         loss=Loss(nn.CrossEntropyLoss()),
         )
         testers.append(cur_tester)
-    run_tests(testers, full_scale_epochs*(full_scale//train_sizes[i]), dont_skips[i], test_every[i])
+    run_tests(testers, full_scale_epochs*(full_scale//train_sizes[parameter_i]), dont_skips[parameter_i], test_every[parameter_i])
     main_tester = concat_results(testers)
     main_tester.save_results(folder_name, 'SMD')
