@@ -16,13 +16,13 @@ full_scale_epochs = 10
 #train_batches = [256, 128, 96, 64, 32, 16, 8, 4, 2]
 #dont_skips = [5, 10, 15, 20, 40, 50, 100, 150, 200]
 #test_every = [2, 4, 6, 8, 16, 80, 160, 320]
-train_sizes = [None, 30000, 20000]
+train_sizes = [full_scale, 30000, 20000]
 train_batches = [256, 128, 96]
 dont_skips = [5, 10, 15]
 test_every = [2, 4, 6]
 folder_name = "big_test1"
 for parameter_i in range(len(train_sizes)):
-    train_dataloaders = make_dataloaders(4, train_dataset, train_sizes[parameter_i], train_batches[parameter_i], 10)
+    train_dataloaders = make_dataloaders(4, train_dataset, train_sizes[parameter_i], train_batches[parameter_i], 10, train_sizes[parameter_i] == full_scale)
     super_model = FCnet(800, 28*28, 10, 2).to(device)
 
     # градиентный спуск без регуляризации
