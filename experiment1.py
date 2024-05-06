@@ -12,7 +12,7 @@ test_dataloader = DataLoader(test_dataset, batch_size=256, shuffle=True)
 
 full_scale = 60000
 full_scale_epochs = 40
-train_sizes = [None, 30000, 20000, 10000, 5000, 1000, 500, 250, 100]
+train_sizes = [full_scale, 30000, 20000, 10000, 5000, 1000, 500, 250, 100]
 train_batches = [128, 128, 96, 64, 32, 16, 8, 4, 2]
 dont_skips = [5, 10, 15, 20, 40, 50, 100, 150, 200]
 test_every = [2, 4, 6, 8, 16, 80, 160, 320]
