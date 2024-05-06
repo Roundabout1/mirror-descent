@@ -34,16 +34,16 @@ def make_models(num_models, model):
         models.append(cur_model)
     return models
 
-def make_dataloaders(num_loaders, dataset, dataloader_size, batch_size, lables_num=10):
+def make_dataloaders(num_loaders, dataset, dataloader_size, batch_size, lables_num=10, use_full_dataset=False):
     """
     создать num_loaders случайных выборок (DataLoader) из dataset
     """
     dataloaders = []
     for i in range(num_loaders):
-        if dataloader_size is not None:
-            balanced_dataset = balancing(dataset, lables_num, dataloader_size)
-        else:
+        if use_full_dataset:
             balanced_dataset = dataset
+        else:
+            balanced_dataset = balancing(dataset, lables_num, dataloader_size)
         dataloader = DataLoader(balanced_dataset, batch_size=batch_size, shuffle=True)
         dataloaders.append(dataloader)
     return dataloaders
