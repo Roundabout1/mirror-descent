@@ -1,0 +1,17 @@
+layers: 4
+neurons_num: 800
+img_size: 784
+activation function: relu
+Epochs: 24000
+unskippable epochs: 25
+test every 1000 epochs
+loss function: CrossEntropyLoss()
+optimizer: SMD_qnorm (
+Parameter Group 0
+    lr: 0.05
+    q: 3
+)
+train batch size: 4
+test batch size: 256
+train data size: 100
+test time overall: 4228.510725259781
