@@ -60,7 +60,7 @@ for tester in SGD_testers:
     tester.save_results(SGD_MODELS, 'SGD')
 
 main_tester = concat_results(SGD_testers)
-main_tester.save_results(SGD_MODELS, 'average_results')
+main_tester.save_results(SGD_MODELS, 'average_results', True)
 
 # SMD
 SMD_testers = []
@@ -82,4 +82,4 @@ for tester in SMD_testers:
     tester.save_results(SMD_MODELS, 'SMD')
 
 main_tester = concat_results(SMD_testers)
-main_tester.save_results(SMD_MODELS, 'average_results')
+main_tester.save_results(SMD_MODELS, 'average_results', True)
