@@ -9,8 +9,14 @@ from data_load import balancing
 from customSGD import CustomSGD
 from loss import Loss, Loss_L2
 from SMD_opt import SMD_qnorm
+"""
+старый путь к результатам экспериментов
+"""
 OUTPUT_ROOT = "output"
-
+"""
+путь к папке с результатами экспериментов
+"""
+EXP_ROOT = "experiments"
 def get_device():
     device = (
         "cuda"
