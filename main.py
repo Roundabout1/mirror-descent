@@ -98,6 +98,7 @@ def concat_results(testers):
             print(testers[i].test_results[j])
 
     for i in range(1, num_testers):
+        main_tester.common_time +=  testers[i].common_time
         for j in  range(num_tests):
             main_tester.train_results[j] = (main_tester.train_results[j][0], 
                                             main_tester.train_results[j][1] + testers[i].train_results[j][1], 
@@ -105,6 +106,7 @@ def concat_results(testers):
             main_tester.test_results[j] = (main_tester.test_results[j][0],
                                             main_tester.test_results[j][1] + testers[i].test_results[j][1], 
                                             main_tester.test_results[j][2] + testers[i].test_results[j][2])
+    main_tester.common_time /= num_testers
     for i in range(num_tests):
         main_tester.train_results[i] = (main_tester.train_results[i][0],
                                             main_tester.train_results[i][1] / num_testers, 
