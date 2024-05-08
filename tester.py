@@ -145,7 +145,17 @@ class NetTester:
             f.write(f'train data size: {len(self.train_dataloader.dataset)}\n')
             f.write(f'test time overall: {self.common_time}')
         if not minimum:
-            # сохранение модели
-            torch.save(self.model, os.path.join(folder_path, 'model.pt'))
-            # сохранение тренировочных данных
-            torch.save(self.train_dataloader.dataset, os.path.join(folder_path, 'train.pt'))
+            self.save_model(folder_path)
+            self.save_train_data(folder_path)
+    
+    def save_model(self, folder_path):
+        """
+        сохранение модели
+        """
+        torch.save(self.model, os.path.join(folder_path, 'model.pt'))
+    
+    def save_train_data(self, folder_path):
+        """
+        сохранение тренировочных данных
+        """
+        torch.save(self.train_dataloader.dataset, os.path.join(folder_path, 'train.pt'))
