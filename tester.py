@@ -148,14 +148,14 @@ class NetTester:
             self.save_model(folder_path)
             self.save_train_data(folder_path)
     
-    def save_model(self, folder_path):
+    def save_model(self, folder_path, name='model'):
         """
         сохранение модели
         """
-        torch.save(self.model, os.path.join(folder_path, 'model.pt'))
+        torch.save(self.model, os.path.join(folder_path, name + '.pt'))
     
-    def save_train_data(self, folder_path):
+    def save_train_data(self, folder_path, name='train'):
         """
         сохранение тренировочных данных
         """
-        torch.save(self.train_dataloader.dataset, os.path.join(folder_path, 'train.pt'))
+        torch.save(self.train_dataloader.dataset, os.path.join(folder_path, name + '.pt'))
