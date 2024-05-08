@@ -113,9 +113,11 @@ class NetTester:
         self.common_time += time.time() - time_start
         return self.train_results, self.test_results
 
-    def save_results(self, output_root, folder_name='treck'):
+    def save_results(self, output_root, folder_name='treck', minimum=False):
         """
         запись результатов тестирования 
+
+        minimum = true - не сохранять модель и входные данные
         """
 
         # генерация уникального имени
@@ -142,7 +144,8 @@ class NetTester:
             f.write(f'test batch size: {self.test_dataloader.batch_size}\n')
             f.write(f'train data size: {len(self.train_dataloader.dataset)}\n')
             f.write(f'test time overall: {self.common_time}')
-        # сохранение модели
-        torch.save(self.model, os.path.join(folder_path, 'model.pt'))
-        # сохранение тренировочных данных
-        torch.save(self.train_dataloader.dataset, os.path.join(folder_path, 'train.pt'))
+        if not minimum:
+            # сохранение модели
+            torch.save(self.model, os.path.join(folder_path, 'model.pt'))
+            # сохранение тренировочных данных
+            torch.save(self.train_dataloader.dataset, os.path.join(folder_path, 'train.pt'))
