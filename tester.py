@@ -113,10 +113,12 @@ class NetTester:
         self.common_time += time.time() - time_start
         return self.train_results, self.test_results
 
-    # запись результатов тестирования 
     def save_results(self, output_root, folder_name='treck'):
-        # генерация уникального имени
+        """
+        запись результатов тестирования 
+        """
 
+        # генерация уникального имени
         cur_time = (str(time.time())).replace('.', '_')
         folder_path_base = os.path.join(output_root, folder_name + '_' + cur_time)
         # проверка на то, что это имя не существует
