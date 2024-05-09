@@ -29,7 +29,7 @@ for i in range(num_testers):
       device=device,
       train_dataloader=train_dataloaders[i],
       test_dataloader=test_dataloader,
-      optimizer=SMD_qnorm(models[i].parameters(), lr=0.005, q=4),
+      optimizer=SMD_qnorm(models[i].parameters(), lr=0.005, q=3),
       loss=Loss(loss_fn=nn.CrossEntropyLoss()),
       show_progress=False,
       initial_epoch=SGD_EPOCHS+1
