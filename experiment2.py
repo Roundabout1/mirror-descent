@@ -37,8 +37,8 @@ test_dataloader = DataLoader(test_dataset, batch_size=256, shuffle=True)
 train_dataloaders = make_dataloaders(4, train_dataset, 1000, 100, 10)
 
 # SGD
-SGD_MODEL = FCnet(800, 28*28, 10, 2).to(device)
-models = make_models(len(train_dataloaders), SGD_MODEL)
+SUPER_MODEL = FCnet(800, 28*28, 10, 2).to(device)
+models = make_models(len(train_dataloaders), SUPER_MODEL)
 # создаём тестеры
 num_testers = len(models)
 SGD_testers = []
@@ -70,9 +70,10 @@ for i in range(num_testers):
       device=device,
       train_dataloader=train_dataloaders[i],
       test_dataloader=test_dataloader,
-      optimizer=SMD_qnorm(models[i].parameters(), lr=0.05, q=3),
+      optimizer=optim.SGD(models[i].parameters(), lr=0.05),
       loss=Loss(loss_fn=nn.CrossEntropyLoss()),
-      show_progress=True
+      show_progress=True,
+      initial_epoch=SGD_testers[i].actual_epochs+1
     )
     SMD_testers.append(cur_tester)
 
