@@ -3,8 +3,8 @@ from main import *
 SMD = "SMD"
 SMDL2_05 = "SMDL2_05"
 SMDL2_01 = "SMDL2_01"
-SMDL2_005 = "SMDL2_05"
-SMDL2_001 = "SMDL2_05"
+SMDL2_005 = "SMDL2_005"
+SMDL2_001 = "SMDL2_001"
 
 def testers_init(method, model, test_dataloader, train_dataloader, device): 
             if method == SMD:
