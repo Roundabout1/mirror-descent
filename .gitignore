@@ -4,3 +4,4 @@ __pycache__/
 **/model.pt
 **/train.pt
 test_folder/
+L2-tests_*/
