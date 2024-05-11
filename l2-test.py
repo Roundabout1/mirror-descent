@@ -24,7 +24,7 @@ def testers_init(method, model, test_dataloader, train_dataloader, device):
 multi_experiment(       
        setup_datasets=setup,
        tester_init=testers_init,
-       methods_names=[SGDL2_CUSTOM],
+       methods_names=[SGDL2_CUSTOM, SGDL2],
        train_sets_num=3,
        labels_num=10,
        train_sizes=[100],
@@ -33,6 +33,6 @@ multi_experiment(
        root_folder=os.path.join(EXP_ROOT, 'L2-tests'),
        super_model=FCnet(800, 28*28, 10, 2).to(device),
        full_scale=60000,
-       full_scale_epochs=40,
+       full_scale_epochs=20,
        dont_skips=[25],
        test_every=[800])
