@@ -60,7 +60,6 @@ class NetTester:
             # Ошибка предсказания
             pred = self.model(X)
             loss = self.loss.apply(pred, y)
-
             # Backpropagation
             loss.backward()
             self.optimizer.step()
@@ -101,7 +100,7 @@ class NetTester:
         self.dont_skip = dont_skip
         self.test_every = test_every
         for e in range(epochs):
-            print(f"Epoch {self.actual_epochs+1}\n-------------------------------")
+            print(f"Epoch: {self.actual_epochs+1}\n-------------------------------")
             self.train_step(self.train_dataloader)
             if e < dont_skip or e % test_every == 0 or e == epochs-1:
                 train_accuracy, train_loss = self.test(self.train_dataloader)
