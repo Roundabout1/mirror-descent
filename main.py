@@ -1,3 +1,5 @@
+import os
+import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -128,3 +130,58 @@ def setup():
     train_dataset = datasets.MNIST(root='./data', train=True, transform=transforms.ToTensor(), download=True)
     test_dataset = datasets.MNIST(root='./data', train=False, transform=transforms.ToTensor(), download=True)
     return train_dataset, test_dataset
+
+def multi_experiment(
+    setup_datasets,
+    tester_init,
+    methods_names,
+    train_sets_num,
+    labels_num,
+    train_sizes,
+    train_batches,
+    test_batch,
+    root_folder,
+    super_model,
+    full_scale,
+    full_scale_epochs,
+    dont_skips,
+    test_every,
+):
+    """
+    обучение и тестирование нескольких моделей
+    """
+    # генерация имени корневой папки
+    cur_time = (str(time.time())).replace('.', '_')
+    root_folder += '_' + cur_time
+
+    train_dataset, test_dataset = setup_datasets()
+    test_dataloader = DataLoader(test_dataset, batch_size=test_batch, shuffle=True)
+    for parameter_i in range(len(train_sizes)):
+        cur_root_folder = os.path.join(root_folder, f'iteration_{parameter_i}')
+        os.makedirs(cur_root_folder, exist_ok=True)
+        data_folder = os.path.join(cur_root_folder, 'train_data')
+        os.makedirs(data_folder, exist_ok=True)
+        train_dataloaders = make_dataloaders(train_sets_num, train_dataset, train_sizes[parameter_i], train_batches[parameter_i], labels_num, train_sizes[parameter_i] == full_scale)
+        for T_DL in range(len(train_dataloaders)):
+            torch.save(train_dataloaders[T_DL], os.path.join(data_folder, f'dataset_{T_DL}.pt'))
+        for method in methods_names:
+            destination = os.path.join(cur_root_folder, method)
+            # зеркальный спуск
+            models = make_models(len(train_dataloaders), super_model)
+            # создаём тестеры
+            num_testers = len(models)
+            testers = []
+            for tester_i in range(num_testers):
+                cur_tester = tester_init(
+                    method=method,
+                    model=models[tester_i],
+                    test_dataloader=test_dataloader,
+                    train_dataloader=train_dataloaders[tester_i],
+                    device=device
+                    )
+                testers.append(cur_tester)
+            run_tests(testers, full_scale_epochs*(full_scale//train_sizes[parameter_i]), dont_skips[parameter_i], test_every[parameter_i])
+            for tester in testers:
+                tester.save_results(destination, 'SMD', True)
+            main_tester = concat_results(testers)
+            main_tester.save_results(destination, 'average', True)
