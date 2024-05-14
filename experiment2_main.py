@@ -8,7 +8,7 @@
 from torch.utils.data import DataLoader
 from FCnet import FCnet
 from loss import Loss_L2, Loss
-from main import concat_results, make_dataloaders, make_models, run_tests, setup, device, EXP_ROOT 
+from main import concat_results, make_dataloaders, make_models, run_tests, setup_MNIST, device, EXP_ROOT 
 from tester import NetTester
 from SMD_opt import SMD_qnorm
 import torch
