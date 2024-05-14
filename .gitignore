@@ -5,3 +5,5 @@ __pycache__/
 **/train.pt
 test_folder/
 L2-tests_*/
+**/*_FAILED/
+**/multi-exp-test*
