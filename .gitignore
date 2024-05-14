@@ -1,5 +1,5 @@
 results/
-data/MNIST/
+data/*
 __pycache__/
 **/model.pt
 **/train.pt
