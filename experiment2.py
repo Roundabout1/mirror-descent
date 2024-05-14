@@ -8,7 +8,7 @@
 from torch.utils.data import DataLoader
 from FCnet import FCnet
 from loss import Loss_L2, Loss
-from main import concat_results, make_dataloaders, make_models, run_tests, setup, device, EXP_ROOT 
+from main import concat_results, make_dataloaders, make_models, run_tests, setup_MNIST, device, EXP_ROOT 
 from tester import NetTester
 from SMD_opt import SMD_qnorm
 import torch.nn as nn
@@ -32,7 +32,7 @@ SGD_MODELS = os.path.join(CUR_ROOT, 'sgd_models')
 SMD_MODELS = os.path.join(CUR_ROOT, 'smd_models')
 
 # загрузка начальных данных
-train_dataset, test_dataset = setup()
+train_dataset, test_dataset = setup_MNIST()
 test_dataloader = DataLoader(test_dataset, batch_size=256, shuffle=True)
 train_dataloaders = make_dataloaders(4, train_dataset, 1000, 100, 10)
 

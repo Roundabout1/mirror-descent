@@ -29,7 +29,7 @@ def testers_init(method, model, test_dataloader, train_dataloader, device):
             )
 
 multi_experiment(       
-       setup_datasets=setup,
+       setup_datasets=setup_MNIST,
        tester_init=testers_init,
        methods_names=[SMDL2_05, SMDL2_01, SMDL2_005, SMDL2_001, SMD],
        train_sets_num=4,

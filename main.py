@@ -123,7 +123,7 @@ def concat_results(testers):
                                             main_tester.test_results[i][1] / num_testers, 
                                             main_tester.test_results[i][2] / num_testers)
     return main_tester
-def setup():
+def setup_MNIST():
     """
     подготовка к тестированию и обучению моделей
     """
