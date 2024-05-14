@@ -20,7 +20,7 @@ def testers_init(method, model, test_dataloader, train_dataloader, device):
 
 full_scale = 60000
 multi_experiment(       
-       setup_datasets=setup_MNIST,
+       setup_datasets=setup_FASHION,
        tester_init=testers_init,
        methods_names=[SMD, SGD],
        train_sets_num=1,
@@ -28,8 +28,8 @@ multi_experiment(
        train_sizes=[full_scale],
        train_batches=[256],
        test_batch=256,
-       root_folder=os.path.join(EXP_ROOT, 'experiments5_fashion'),
-       super_model=FCnet(800, 28*28, 10, 2).to(device),
+       root_folder=os.path.join(EXP_ROOT, 'experiments5_fashion-big-net'),
+       super_model=FCnet(2000, 28*28, 10, 4).to(device),
        full_scale=full_scale,
        full_scale_epochs=10,
        dont_skips=[-1],
