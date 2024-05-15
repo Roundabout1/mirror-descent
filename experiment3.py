@@ -1,7 +1,7 @@
 from torch.utils.data import DataLoader
 from FCnet import FCnet
 from loss import Loss_L2, Loss
-from main import concat_results, make_dataloaders, make_models, run_tests, setup, device, EXP_ROOT 
+from main import concat_results, make_dataloaders, make_models, run_tests, setup_MNIST, device, EXP_ROOT 
 from tester import NetTester
 from SMD_opt import SMD_qnorm
 from SMD_opt2 import SMD_qnorm2
@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.optim as optim
 import os
 from torchvision import datasets, transforms
-train_dataset, test_dataset = setup()
+train_dataset, test_dataset = setup_MNIST()
 test_dataloader = DataLoader(test_dataset, batch_size=256, shuffle=True)
 
 num_method = 2

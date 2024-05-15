@@ -4,7 +4,7 @@ SGD-обучение и сохранение моделей вместе с ис
 from experiment2_main import *
 
 # загрузка начальных данных
-train_dataset, test_dataset = setup()
+train_dataset, test_dataset = setup_MNIST()
 test_dataloader = DataLoader(test_dataset, batch_size=TEST_BATCH)
 train_dataloaders = make_dataloaders(TRAIN_SAMPLE_NUM, train_dataset, TRAIN_DATA_SIZE, TRAIN_BATCH, 10)
 

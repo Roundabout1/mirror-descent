@@ -6,3 +6,5 @@ __pycache__/
 test_folder/
 L2-tests_*/
 *.pt
+**/*_FAILED/
+**/multi-exp-test*
