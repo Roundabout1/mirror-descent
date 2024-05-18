@@ -125,10 +125,18 @@ def concat_results(testers):
     return main_tester
 def setup_MNIST():
     """
-    подготовка к тестированию и обучению моделей
+    загрузка датаестов из MNIST 
     """
     train_dataset = datasets.MNIST(root='./data', train=True, transform=transforms.ToTensor(), download=True)
     test_dataset = datasets.MNIST(root='./data', train=False, transform=transforms.ToTensor(), download=True)
+    return train_dataset, test_dataset
+
+def setup_FASHION():
+    """
+    загрузка датасетов из Fashion MNIST
+    """
+    train_dataset = datasets.FashionMNIST(root='./data', train=True, transform=transforms.ToTensor(), download=True)
+    test_dataset = datasets.FashionMNIST(root='./data', train=False, transform=transforms.ToTensor(), download=True)
     return train_dataset, test_dataset
 
 def multi_experiment(

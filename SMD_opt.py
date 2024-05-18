@@ -36,5 +36,3 @@ class SMD_qnorm(Optimizer):
                 p.data = (torch.abs(update/(group['q']))**(1/(group['q'] - 1))) * torch.sign(update)
 
         return loss 
-    
-
