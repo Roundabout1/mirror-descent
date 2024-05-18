@@ -170,19 +170,22 @@ def multi_experiment(
         data_folder = os.path.join(cur_root_folder, 'train_data')
         os.makedirs(data_folder, exist_ok=True)
         train_dataloaders = make_dataloaders(train_sets_num, train_dataset, train_sizes[parameter_i], train_batches[parameter_i], labels_num, train_sizes[parameter_i] == full_scale)
-        for T_DL in range(len(train_dataloaders)):
+        for T_DL in range(train_sets_num):
             torch.save(train_dataloaders[T_DL], os.path.join(data_folder, f'dataset_{T_DL}.pt'))
         for method in methods_names:
             destination = os.path.join(cur_root_folder, method)
-            # зеркальный спуск
-            models = make_models(len(train_dataloaders), super_model)
+            if super_model is not None:
+                models = make_models(train_sets_num, super_model)
             # создаём тестеры
-            num_testers = len(models)
             testers = []
-            for tester_i in range(num_testers):
+            for tester_i in range(train_sets_num):
+                if super_model is not None:
+                    tester_model = models[tester_i]
+                else:
+                    tester_model = None
                 cur_tester = tester_init(
                     method=method,
-                    model=models[tester_i],
+                    model=tester_model,
                     test_dataloader=test_dataloader,
                     train_dataloader=train_dataloaders[tester_i],
                     device=device
@@ -190,6 +193,6 @@ def multi_experiment(
                 testers.append(cur_tester)
             run_tests(testers, full_scale_epochs*(full_scale//train_sizes[parameter_i]), dont_skips[parameter_i], test_every[parameter_i])
             for tester in testers:
-                tester.save_results(destination, 'SMD', True)
+                tester.save_results(destination, 'results', True)
             main_tester = concat_results(testers)
             main_tester.save_results(destination, 'average', True)
