@@ -30,17 +30,17 @@ def testers_init(method, model, test_dataloader, train_dataloader, device):
 
 full_scale = 60000
 multi_experiment(       
-       setup_datasets=setup_MNIST,
+       setup_datasets=setup_MNIST, # setup_MNIST
        tester_init=testers_init,
        methods_names=[SGD2, SMD2, SGD4, SMD4],
        train_sets_num=4,
        labels_num=10,
-       train_sizes=[full_scale],
-       train_batches=[256],
+       train_sizes=[1000],
+       train_batches=[25],
        test_batch=256,
-       root_folder=os.path.join(EXP_ROOT, 'experiments7_big'),
+       root_folder=os.path.join(EXP_ROOT, 'experiments7_MNIST1000'),
        super_model=None,
        full_scale=full_scale,
        full_scale_epochs=10,
-       dont_skips=[-1],
-       test_every=[1])
+       dont_skips=[40],
+       test_every=[20])
