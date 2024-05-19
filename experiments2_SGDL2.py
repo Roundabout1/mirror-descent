@@ -1,4 +1,4 @@
-from experiment2_main import *
+from experiments2_main import *
 
 SGDL2_MODELS = os.path.join(EXP_ROOT, 'SGDL2_models')
 
