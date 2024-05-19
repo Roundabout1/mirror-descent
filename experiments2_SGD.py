@@ -1,7 +1,7 @@
 """
 SGD-обучение и сохранение моделей вместе с исходными обучающими данными
 """
-from experiment2_main import *
+from experiments2_main import *
 
 # загрузка начальных данных
 train_dataset, test_dataset = setup_MNIST()
