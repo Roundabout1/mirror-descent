@@ -1,0 +1,5 @@
+Epochs: 9600
+unskippable epochs: 150
+test every 320 epochs
+train batch size: 4
+train data size: 250
