@@ -25,12 +25,12 @@ multi_experiment(
        methods_names=[SMD, SGD],
        train_sets_num=4,
        labels_num=10,
-       train_sizes=[full_scale],
+       train_sizes=[30000, 20000, 10000],
        train_batches=[256],
        test_batch=256,
-       root_folder=os.path.join(EXP_ROOT, 'experiments5_fashion'),
+       root_folder=os.path.join(EXP_ROOT, 'experiments5_fashion_extra'),
        super_model=FCnet(800, 28*28, 10, 4).to(device),
        full_scale=full_scale,
-       full_scale_epochs=600,
-       dont_skips=[10],
-       test_every=[10])
+       full_scale_epochs=400,
+       dont_skips=[40, 60, 80],
+       test_every=[20, 30, 40])

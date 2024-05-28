@@ -4,7 +4,7 @@ SGD = "SGD"
 SMD = "SMD"
 
 def testers_init(method, model, test_dataloader, train_dataloader, device): 
-            lr = 0.01
+            lr = 0.05
             if method == SGD:
                 optimizer = torch.optim.SGD(model.parameters(), lr=lr)
             else:
@@ -25,12 +25,12 @@ multi_experiment(
        methods_names=[SMD, SGD],
        train_sets_num=4,
        labels_num=10,
-       train_sizes=[1000],
-       train_batches=[256],
+       train_sizes=[full_scale, 30000, 20000],
+       train_batches=[256, 256, 256],
        test_batch=256,
-       root_folder=os.path.join(EXP_ROOT, 'experiments6_fashion'),
+       root_folder=os.path.join(EXP_ROOT, 'experiments_fashion_extra'),
        super_model=FCnet(800, 28*28, 10, 4).to(device),
        full_scale=full_scale,
-       full_scale_epochs=40,
-       dont_skips=[100],
-       test_every=[50])
+       full_scale_epochs=400,
+       dont_skips=[20, 40, 50],
+       test_every=[10, 15, 20])
