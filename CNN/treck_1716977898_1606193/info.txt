@@ -1,0 +1,22 @@
+CNN
+Epochs: 3000
+unskippable epochs: 100
+test every 50 epochs
+loss function: CrossEntropyLoss()
+optimizer: Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    lr: 0.01
+    maximize: False
+    weight_decay: 0
+)
+train batch size: 100
+test batch size: 100
+train data size: 100
+test time overall: 624.1817479133606

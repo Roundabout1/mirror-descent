@@ -1,0 +1,20 @@
+CNN
+Epochs: 3000
+unskippable epochs: 100
+test every 50 epochs
+loss function: CrossEntropyLoss()
+optimizer: SGD (
+Parameter Group 0
+    dampening: 0
+    differentiable: False
+    foreach: None
+    lr: 0.01
+    maximize: False
+    momentum: 0
+    nesterov: False
+    weight_decay: 0
+)
+train batch size: 100
+test batch size: 100
+train data size: 100
+test time overall: 575.2909183502197

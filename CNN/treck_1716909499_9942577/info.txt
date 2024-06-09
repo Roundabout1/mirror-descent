@@ -1,0 +1,13 @@
+CNNEpochs: 5
+unskippable epochs: 5
+test every 1 epochs
+loss function: CrossEntropyLoss()
+optimizer: SMD_qnorm (
+Parameter Group 0
+    lr: 0.001
+    q: 3
+)
+train batch size: 100
+test batch size: 100
+train data size: 60000
+test time overall: 183.60479283332825
