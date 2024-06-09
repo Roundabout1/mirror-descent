@@ -17,7 +17,8 @@ class Loss_L2(Loss):
         loss = super().apply(pred, y)
         norm = 0
         for param in self.model.parameters():
-            norm += torch.sum(param**2)
+            if not self.ignore_bias or len(param.shape) != 1:
+                norm += torch.sum(param**2)
         return loss + norm*self.l2_lambda
     def __str__(self) -> str:
         return '{loss_function} with L2-Regularization = {L2}, ignore bias = {bias}'.format(loss_function=super().__str__(), L2=self.l2_lambda, bias=self.ignore_bias)
