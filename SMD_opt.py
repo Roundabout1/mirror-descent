@@ -30,7 +30,7 @@ class SMD_qnorm(Optimizer):
                 # q norm potential function
                 update = (group['q']) * (torch.abs(p.data)**(group['q']-1)) * torch.sign(p.data) - group['lr'] * d_p
                 p.data = (torch.abs(update/(group['q']))**(1/(group['q'] - 1))) * torch.sign(update) 
-                if torch.isnan(update):
+                if torch.any(torch.isnan(update)).item():
                     print("UPDATE NAN", p.data, d_p)
-                if torch.isnan(p.data):
+                if torch.any(torch.isnan(p.data)).item():
                     ("p.data NAN", update)
