@@ -4,6 +4,7 @@ SGD = "SGD"
 SMD = "SMD"
 
 def testers_init(method, model, test_dataloader, train_dataloader, device): 
+            # слишком высокая скорость, может привести к взыву градиента
             lr = 0.05
             if method == SGD:
                 optimizer = torch.optim.SGD(model.parameters(), lr=lr)
