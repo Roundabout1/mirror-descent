@@ -20,14 +20,17 @@ def read_last_line(file_path):
 def remove_digits_and_underscore(input_string):
     result = re.sub(r'[\d_]', '', input_string)
     return result
-
-def print_res(dict):
+# semilicon - заменить точку на запятую
+def print_res(dict, semilicon=False):
     for key, value in dict.items():
         SGD =  value[0].value
         SMD = value[1].value
         if value[0].method == 'SMD':
             SGD, SMD = SMD, SGD
-        print(key, value[0].value, value[1].value)
+        if semilicon:
+            SGD = str(SGD).replace('.', ',')
+            SMD = str(SMD).replace('.', ',')
+        print(key, SGD, SMD)
 
 class Result:
     def __init__(self, method, measurement, value):
@@ -40,8 +43,10 @@ class Pair:
         self.result1 = res1
         self.result2 = res2
 
-directory = "D:/github/mirror-descent/experiments/for_report/experiments1"
-filename = "test_results.txt"
+#directory = "D:/github/mirror-descent/experiments/for_report/experiments1" #PC
+directory = "D:/WorkProjects/github/mirror-descent/experiments/for_report/experiments1" #Laptop
+#filename = "test_results.txt" 
+filename = "train_results.txt"
 
 result = find_files(directory, filename)
 accuracy_results = {}
@@ -49,7 +54,7 @@ loss_results = {}
 for file_path in result:
     root_split = file_path.split('/')
     inside_split = root_split[len(root_split)-1].split('\\')
-    if  inside_split[1] == 'SGDL2':
+    if inside_split[1] == 'SGDL2':
         continue
     sample_size = inside_split[1]
     method = remove_digits_and_underscore(inside_split[2])
@@ -68,5 +73,6 @@ for file_path in result:
 
 sorted_acc = dict(sorted(accuracy_results.items(), key=lambda x: int(x[0])))
 sorted_loss = dict(sorted(loss_results.items(), key=lambda x: int(x[0])))
-print_res(sorted_acc)
-print_res(sorted_loss)
+semicolon = True
+print_res(sorted_acc, semicolon)
+print_res(sorted_loss, semicolon)
