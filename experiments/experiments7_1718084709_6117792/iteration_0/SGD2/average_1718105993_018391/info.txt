@@ -1,0 +1,23 @@
+layers: 4
+neurons_num: 800
+img_size: 784
+activation function: relu
+Epochs: 120
+unskippable epochs: 1
+test every 4 epochs
+loss function: CrossEntropyLoss()
+optimizer: SGD (
+Parameter Group 0
+    dampening: 0
+    differentiable: False
+    foreach: None
+    lr: 0.01
+    maximize: False
+    momentum: 0
+    nesterov: False
+    weight_decay: 0
+)
+train batch size: 256
+test batch size: 256
+train data size: 60000
+test time overall: 1319.2034818530083
