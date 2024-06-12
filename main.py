@@ -154,6 +154,7 @@ def multi_experiment(
     full_scale_epochs,
     dont_skips,
     test_every,
+    minimum=True,
 ):
     """
     обучение и тестирование нескольких моделей
@@ -193,6 +194,6 @@ def multi_experiment(
                 testers.append(cur_tester)
             run_tests(testers, full_scale_epochs*(full_scale//train_sizes[parameter_i]), dont_skips[parameter_i], test_every[parameter_i])
             for tester in testers:
-                tester.save_results(destination, 'results', True)
+                tester.save_results(destination, 'results', minimum)
             main_tester = concat_results(testers)
             main_tester.save_results(destination, 'average', True)
