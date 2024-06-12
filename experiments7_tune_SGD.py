@@ -7,11 +7,12 @@ SMD4 = "SMD4"
 
 full_scale = 60000
 inititial_epochs = 201
-repetitions = 2
+repetitions = 4
+common_model_name = 'model.pt'
 
 def tune_init(method, model, test_dataloader, train_dataloader, device):
         lr = 0.01
-        model = torch.load(method).to(device)
+        model = torch.load(os.path.join(method, common_model_name)).to(device)
         if SGD2 in method or SGD4 in method:
             optimizer = torch.optim.SGD(model.parameters(), lr=lr)
         else:
@@ -27,14 +28,13 @@ def tune_init(method, model, test_dataloader, train_dataloader, device):
         )
 
 root = os.path.join(EXP_ROOT, os.path.join('experiments7', 'MNIST60K'))
-common_model_name = 'model.pt'
 SGD2_models_root = os.path.join(root, 'SGD2')
 SGD4_models_root = os.path.join(root, 'SGD4')
 models_root = [SGD2_models_root, SGD4_models_root]
 models_pathes = []
 for r in models_root:
     for i in range(repetitions):
-        models_pathes.append(os.path.join(r, os.path.join(f'results_{i+1}', common_model_name)))
+        models_pathes.append(os.path.join(r, f'results_{i+1}'))
 print(models_pathes)
 multi_experiment(       
        setup_datasets=setup_MNIST, # setup_MNIST
@@ -45,10 +45,10 @@ multi_experiment(
        train_sizes=[full_scale],
        train_batches=[256],
        test_batch=256,
-       root_folder=os.path.join(EXP_ROOT, 'test_experiments7_tune'),
+       root_folder=os.path.join(EXP_ROOT, 'experiments7_tune_SGD'),
        super_model=None,
        full_scale=full_scale,
-       full_scale_epochs=2,
+       full_scale_epochs=20,
        dont_skips=[20],
        test_every=[10],
        minimum=True)
