@@ -9,7 +9,7 @@ from torch.optim import Optimizer
 
 class SMD_qnorm(Optimizer):
 
-    def __init__(self, params, lr=0.01, q=3):
+    def __init__(self, params, lr=0.01, q=3, ignore_bias=False):
         if not 0.0 <= lr:
             raise ValueError("Invalid learning rate: {}".format(lr))
         if not 2.0 <= q:
@@ -17,6 +17,7 @@ class SMD_qnorm(Optimizer):
 
         defaults = dict(lr=lr, q=q)
         super(SMD_qnorm, self).__init__(params, defaults)
+        self.ignore_bias = ignore_bias
     
     def __setstate__(self, state):
         super(SMD_qnorm, self).__setstate__(state)
@@ -24,9 +25,10 @@ class SMD_qnorm(Optimizer):
     def step(self):
         for group in self.param_groups:
             for p in group['params']:
-                if p.grad is None:
-                    continue
-                d_p = p.grad.data
-                # q norm potential function
-                update = (group['q'])* (torch.abs(p.data)**(group['q']-1)) * torch.sign(p.data) - group['lr'] * d_p
-                p.data = (torch.abs(update/(group['q']))**(1/(group['q'] - 1))) * torch.sign(update) 
+                if not self.ignore_bias or len(p.shape) != 1:
+                    if p.grad is None:
+                        continue
+                    d_p = p.grad.data
+                    # q norm potential function
+                    update = (group['q'])* (torch.abs(p.data)**(group['q']-1)) * torch.sign(p.data) - group['lr'] * d_p
+                    p.data = (torch.abs(update/(group['q']))**(1/(group['q'] - 1))) * torch.sign(update) 
